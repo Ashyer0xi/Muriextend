@@ -15,19 +15,20 @@ const API_URL = `${BASE_URL}/wp-json/wp/v2`;
 const USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36";
 
 async function fetchJson(url) {
-    const res = await fetch(url, { 
-        headers: { "User-Agent": USER_AGENT },
-        credentials: "include"
-    });
+    const res = await fetch(url, { headers: { "User-Agent": USER_AGENT, "Cookie": await getCookie(BASE_URL) } });
     return res.json();
 }
 
 async function fetchHtml(url) {
-    const res = await fetch(url, { 
-        headers: { "User-Agent": USER_AGENT },
-        credentials: "include"
-    });
+    const res = await fetch(url, { headers: { "User-Agent": USER_AGENT, "Cookie": await getCookie(BASE_URL) } });
     return res.text();
+}
+
+async function getCookie(url) {
+    if (typeof miru !== "undefined" && miru.cookie) {
+        return await miru.cookie(url);
+    }
+    return "";
 }
 
 async function getCategories() {
@@ -64,7 +65,7 @@ function cleanText(html) {
 }
 
 function extractThumbnail(post) {
-    return (post._embedded?.['wp:featuredmedia']?.[0]?.source_url) || "https://via.placeholder.com/300x450?text=Cinemana";
+    return post._embedded?.['wp:featuredmedia']?.[0]?.source_url || "https://via.placeholder.com/300x450?text=Cinemana";
 }
 
 function extractThumbnailFromHtml(html) {
