@@ -1,14 +1,32 @@
+// ==MiruExtension==
+// @name         Cinemana VIP
+// @version      v3.0.0
+// @author       Anonymous
+// @lang         ar
+// @license      MIT
+// @icon         https://cinemana.vip/wp-content/uploads/2024/01/favicon.png
+// @package      cinemana.vip
+// @type         video
+// @webSite      https://cinemana.vip
+// ==/MiruExtension==
+
 const BASE_URL = "https://cinemana.vip";
 const API_URL = `${BASE_URL}/wp-json/wp/v2`;
 const USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36";
 
 async function fetchJson(url) {
-    const res = await fetch(url, { headers: { "User-Agent": USER_AGENT } });
+    const res = await fetch(url, { 
+        headers: { "User-Agent": USER_AGENT },
+        credentials: "include"
+    });
     return res.json();
 }
 
 async function fetchHtml(url) {
-    const res = await fetch(url, { headers: { "User-Agent": USER_AGENT } });
+    const res = await fetch(url, { 
+        headers: { "User-Agent": USER_AGENT },
+        credentials: "include"
+    });
     return res.text();
 }
 
